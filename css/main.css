@@ -1,0 +1,23 @@
+
+
+.cartilla-bingo{
+    display: grid;
+    grid-template-columns: 5;
+    grid-template-rows: 1;
+    justify-content: space-around;
+}
+body{
+    background: rgb(240, 240, 103);
+}
+
+.header{
+    display: grid;
+    grid-template-columns: 5;
+    grid-template-rows: 1;
+    justify-content: space-around;
+}
+
+.cartilla{
+    text-align: center;
+    margin: 10px auto;
+}

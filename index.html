@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido al Bingo</title>
+    <h1 style="font-family:verdana" >Vamos a jugar Bingo!</h1>
+    <script src="js/script.js"></script>
+</head>
+<header>
+    <table class="cartilla-bingo">
+        <h2>CARTILLA -BINGO</h2>
+        <tr>
+            <th class="header">B</th>
+            <th class="header">I</th>
+            <th class="header">N</th>
+            <th class="header">G</th>
+            <th class="header">O</th>
+        </tr>
+
+
+</header>
+<body onload="inicio()">
+
+    
+    <div div="contenedor-bingo">
+    
+        <tr>
+            <td> <input id="casilla0" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla0')"> </td>
+            <td> <input id="casilla1" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla1')"> </td>
+            <td> <input id="casilla2" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla2')"> </td>
+            <td> <input id="casilla3" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla3')"> </td>
+            <td> <input id="casilla4" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla4')"> </td>
+
+        </tr>
+        
+        <tr>
+            <td> <input id="casilla0" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla5')"> </td>
+            <td> <input id="casilla1" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla6')"> </td>
+            <td> <input id="casilla2" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla7')"> </td>
+            <td> <input id="casilla3" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla8')"> </td>
+            <td> <input id="casilla4" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla9')"> </td>
+
+        </tr>
+
+        <tr>
+            <td> <input id="casilla0" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla10')"> </td>
+            <td> <input id="casilla1" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla11')"> </td>
+            <td> <input id="casilla2" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla12')"> </td>
+            <td> <input id="casilla3" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla13')"> </td>
+            <td> <input id="casilla4" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla14')"> </td>
+
+        </tr>
+
+        <tr>
+            <td> <input id="casilla0" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla15')"> </td>
+            <td> <input id="casilla1" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla16')"> </td>
+            <td> <input id="casilla2" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla17')"> </td>
+            <td> <input id="casilla3" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla18')"> </td>
+            <td> <input id="casilla4" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla19')"> </td>
+
+        </tr>
+
+        <tr>
+            <td> <input id="casilla0" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla20')"> </td>
+            <td> <input id="casilla1" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla21')"> </td>
+            <td> <input id="casilla2" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla22')"> </td>
+            <td> <input id="casilla3" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla23')"> </td>
+            <td> <input id="casilla4" class="casilla" type="button" value="&nbsp;" onclick="marcarCasilla('casilla24')"> </td>
+
+        </tr>
+     
+
+
+    </table>
+      
+
+    <p><a href="#" onclick="generarCartilla();">Generar Cartilla</a> </p>    
+        
+    </div>
+    
+    <div class="botones">
+
+        <button onclick="SacarBola();">Sacar Bola</button>
+
+    </div>
+    
+</body>
+</html>
