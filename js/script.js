@@ -4,6 +4,8 @@ let continuar = "S", letra;
 
 let Numerosusados = new Array(76);
 
+Math.random();
+
 function inicio(){
     generarCartilla();
 }
@@ -19,6 +21,48 @@ function generarCartilla(){
     }
 
 }
+
+function Cartillas(inicio, fin, cantidad) {
+    
+    lista = listaNum(inicio, fin)
+    listaNueva = []
+    
+    for (x in cantidad ){
+        a = random.randint(0, length(lista)-1)
+        n = lista[a]
+        listaNueva.append(n)
+        lista.pop(a)
+    print(listaNueva)
+    
+   
+}
+Cartillas(1,15,5);
+Cartillas(16,30,5);
+Cartillas(31,45,4);
+Cartillas(46,60,5);
+Cartillas(61,75,5);
+
+}
+
+//  Sacar bolillas una por una
+
+function Bolillas() {
+
+    lista = listaNum(1, 75)
+
+    while (lista.length> 0)  {
+        a = random.randint(0, length(lista)-1)
+        n = lista[a]
+        print(n, end= "")
+        lista.pop(a)
+        print()
+        TimeRanges.sleep(5)
+    }
+
+}
+
+
+
 
 
 function generarCasilla(NumeroCasilla){
