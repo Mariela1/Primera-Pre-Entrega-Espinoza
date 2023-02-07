@@ -1,145 +1,109 @@
-let NumeroAleatorioi=1;
-let NumeroAleatoriof =75;
-let continuar = "S", letra;
 
-let Numerosusados = new Array(76);
+//let titulo = document.getElementById('titulo');
+//let cartillabingo = document.getElementById('cartillabingo');
+//titulo.className = "rojo";
+//cartillabingo.className = "rojo";
 
-Math.random();
 
-function inicio(){
-    generarCartilla();
-}
+// Generamos lista de primera columna
 
-function generarCartilla(){
+function generarCartilla() {
 
-    resetNumerosusados();
+    // Creamos el arreglo para cada columna del Bingo
 
-    for (let i=0; i <25; i++){
-        if (i==12)
-        continue;
-        generarCasilla(i);
-    }
+    /* Las columnas del BINGO se dividen en:
 
-}
+    B: Del 1 al 15
+    I: Del 16 al 30
+    N: Del 31 al 45
+    G: Del 46 al 60
+    O: Del 61 al 75
+    */
 
-function Cartillas(inicio, fin, cantidad) {
+    let array = [
+
+        [], //B (1 - 15)
+        [], //I (16 - 30)
+        [], //N (31 - 45)
+        [], //G (46 - 60)
+        [] //O (61 - 75)
+    ]; 
     
-    lista = listaNum(inicio, fin)
-    listaNueva = []
-    
-    for (x in cantidad ){
-        a = random.randint(0, length(lista)-1)
-        n = lista[a]
-        listaNueva.append(n)
-        lista.pop(a)
-    print(listaNueva)
-    
-   
-}
-Cartillas(1,15,5);
-Cartillas(16,30,5);
-Cartillas(31,45,4);
-Cartillas(46,60,5);
-Cartillas(61,75,5);
+    // Completamos los sub-arreglos con numeros aleatorios
 
-}
+    for (let i=0; i < array.length, i++) {
+        // Asignamos un minimo y maximo  para las 5 columnas
 
-//  Sacar bolillas una por una
+        let min = (i*15) + 1;
+        let max = min + 15;
 
-function Bolillas() {
-
-    lista = listaNum(1, 75)
-
-    while (lista.length> 0)  {
-        a = random.randint(0, length(lista)-1)
-        n = lista[a]
-        print(n, end= "")
-        lista.pop(a)
-        print()
-        TimeRanges.sleep(5)
-    }
-
-}
-
-
-
-
-
-function generarCasilla(NumeroCasilla){
-    let actualcastilla = "Casilla" + NumeroCasilla;
-    let num;
-    let Numerosusados;
-
-    let NumerosColumna = new Array(0,1,2,3,4,0,1,2,3,4,0,1,2,3,4,0,1,2,3,4,0,1,2,3,4)
-    nuevoNumero = (NumerosColumna[NumeroCasilla]*15)+generaNuevoNum();
-
-    while (Numerosusados[nuevoNumero] == true){
-        nuevoNumero = (NumerosColumna[NumerosColumna]*15) + generaNuevoNum();
-    }
-    Numerosusados[nuevoNumero] = True;
-    document.getElementById(actualcastilla).value = nuevoNumero; 
-
-}
-
-function generaNuevoNumero(){
-    return Math.floor((Math.random()*15)+1);
-}
-
-function resetNumerosusados() {
-    for (let i=0; i < Numerousados.length; i++){
-        Numerosusados[i] = false;
-    }
-}
-
-function generarOtraCartilla(){
-    resetNumerosusados();
-    generarCartilla();
-}
-
-function marcarCasilla(casilla) {
-    let actualcastilla = document.getElementById(casilla);
-    //if (actualcastilla.style.backgroundColor == "blue")
-   // actualcastilla.style.backgroundColor == "yellow";
-   // else
-   // actualcastilla.style.backgroundColor = "red";
-    return;
-}
-
-function SacarBola(){
-    do{
-        // Retorna a random entero from 1 to 75:
-        continuar=prompt("Desea sacar otra bola? S/N");
-        numero=Math.floor(Math.random()*75);
-        //letra B
-       
-        switch(true){
-            case (numero >=1 && numero <=15):
-                letra = "B"
-                break;
-            
-            //letra I
-            case (numero >=16 && numero <=30):
-                letra = "I"
-                break;
-            // letra N
-            case(numero >=31 && numero <=45):
-                letra = "N"
-                break;
-            // letra G
-            case (numero >=46 && numero <=60):
-                letra = "G"
-                break;
-            //letra O
-            case (numero >=61 && numero <=75):
-                letra = "O"
-                break;
-            
+        // Mientras el sub-arreglo tenga 5 elementos, el ciclo funciona
+        while (array[i].length < 5 ) {
+            let num = Math.floor(Math.random()* (max - min)) + min;
+            // Para evitar que los numeros se repitan
+            if (!array[i].includes(num)) {
+                array[i].push(num);
+            }
         }
-       
-        console.log(letra+numero);
-    }while(continuar.toLowerCase()||continuar.toUpperCase())
+
+        // Ordenar
+
+        array[i].sort((a,b) => a - b);
+    }
+    // Colocamos una X en el centro de cada cartilla
+
+    array[2][2] = 'X';
+    return array;
     
 }
+
+function cartillas() {
+
+    return [
+        generarCartilla(),
+        generarCartilla(),
+        generarCartilla(),
+        generarCartilla(),
+        generarCartilla(),
+        generarCartilla()
+    ]
+}
+
+let cartones = cartillas();
+let html = '';
+cartones.forEach(carton => {
+    html += `
+        <table>
+        <thead>
+        <tr>
+            <th>B</th>
+            <th>I</th>
+            <th>N</th>
+            <th>G</th>
+            <th>O</th>
+        </tr>
+        </thead>
+        <tbody>`;
+    for (let i=0 ; i < 5; i++) {
+        html += `
+    <tr>
+        <td>${carton[0][i]}</td>
+        <td>${carton[1][i]}</td>
+        <td>${carton[2][i]}</td>
+        <td>${carton[3][i]}</td>
+        <td>${carton[4][i]}</td>
+    </tr>
+        `;
+    }
+
+    html += '</tbody></table>';
+});
+
+document.querySelector('#bingocartillas').innerHTML = html;
+
+//bingocartillas.innerHTML = html;
+//let bingocartillas = document.getElementById('#bingocartillas');
+
 
     
 

@@ -1,10 +1,15 @@
 
 
-.cartilla-bingo{
+html {
+    line-height: 1.5;
+}
+
+#bingocartillas{
     display: grid;
     grid-template-columns: 5;
     grid-template-rows: 1;
     justify-content: space-around;
+    color: red;
 }
 body{
     background: rgb(240, 240, 103);
@@ -15,9 +20,29 @@ body{
     grid-template-columns: 5;
     grid-template-rows: 1;
     justify-content: space-around;
+    color: red;
 }
 
 .cartilla{
     text-align: center;
     margin: 10px auto;
+}
+
+.rojo{
+    color: red;
+}
+
+table{
+    margin: 30px;
+}
+
+table td{
+    border-color: black;
+    margin: 1px;
+    padding: 5px 5px;
+    text-align: center;
+}
+
+table tr:nth-child(5) td:nth-child(5){
+    background: #ccc;
 }
