@@ -1,5 +1,3 @@
-
-//let titulo = document.getElementById('titulo');
 //let cartillabingo = document.getElementById('cartillabingo');
 //titulo.className = "rojo";
 //cartillabingo.className = "rojo";
@@ -31,7 +29,7 @@ function generarCartilla() {
     
     // Completamos los sub-arreglos con numeros aleatorios
 
-    for (let i=0; i < array.length, i++) {
+    for (let i=0; i < array.length; i++) {
         // Asignamos un minimo y maximo  para las 5 columnas
 
         let min = (i*15) + 1;
@@ -99,11 +97,13 @@ cartones.forEach(carton => {
     html += '</tbody></table>';
 });
 
-document.querySelector('#bingocartillas').innerHTML = html;
 
-//bingocartillas.innerHTML = html;
-//let bingocartillas = document.getElementById('#bingocartillas');
+bingocartillas = document.querySelector('#bingocartillas');
+bingocartillas.innerHTML = html;
+document.addEventListener('DOMContentLoader',cartillas, false)
 
-
-    
-
+//let boton = document.getElementById("btnPrincipal")
+//boton.addEventListener("mouseover", respuestaClick)
+function respuestaClick(){
+    console.log("Respuesta evento");
+}

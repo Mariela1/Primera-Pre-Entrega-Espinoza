@@ -5,7 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/main.css">
+    <script src="js/generar_carton.js" defer></script>
+    <script src="js/sacar_bolilla.js" defer></script>
     <title>Bienvenido al Bingo</title>
+    
     <h1 style="font-family:verdana">Vamos a jugar Bingo!</h1>
     
 </head>
@@ -13,10 +16,12 @@
 </header>
 
 <body>
+
+    <div id="titulo"><h1>Selecciona tu cartilla</h1></div>
     <div id="bingocartillas"></div>
-    <script src="js/script.js">
-        <button type='' id='bingocartillas'></button>
-    </script>
-   
+    <p id="numero"></p>
+    <div class=".main__contenedor-bolillas"></div>
+    <button class=".main__btn-play">Play Bolilla</button>
+    <button class=".main__btn-stop">Stop Bolilla</button>
 </body>
 </html>
