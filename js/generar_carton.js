@@ -50,7 +50,7 @@ function generarCartilla() {
     }
     // Colocamos una X en el centro de cada cartilla
 
-    array[2][2] = 'X';
+    array[2][2] = 'FREE';
     return array;
     
 }
@@ -59,11 +59,7 @@ function cartillas() {
 
     return [
         generarCartilla(),
-        generarCartilla(),
-        generarCartilla(),
-        generarCartilla(),
-        generarCartilla(),
-        generarCartilla()
+        
     ]
 }
 
@@ -106,4 +102,33 @@ document.addEventListener('DOMContentLoader',cartillas, false)
 //boton.addEventListener("mouseover", respuestaClick)
 function respuestaClick(){
     console.log("Respuesta evento");
+}
+
+function marcarNumeros() {
+    var numeros = [];
+    var celdas = [];
+    var tabla = document.getElementsByTagName("table")[0];
+    
+    while (numeros.length < 25) {
+        var numero = Math.floor(Math.random()*75) + 1;
+        if (!numeros.includes(numero)) {
+            numeros.push(numero);
+        }
+    }
+
+// asignando los numeros a las celdas de la tabla
+
+    for (var i=0; i < 25; i++) {
+        var celda = "celda" + (i + 1);
+        celdas.push(celda);
+        document.getElementById(celda).innerHTML = numeros[i];
+    }
+
+// agregar una clase css a las celdas marcadas
+
+    for (var i= 0; i< celdas.length; i++) {
+        document.getElementById(celdas[i]).classList.add("marcada");
+    }
+
+
 }

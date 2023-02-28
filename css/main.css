@@ -50,3 +50,7 @@ table td{
 table tr:nth-child(5) td:nth-child(5){
     background: #ccc;
 }
+ 
+.marcada {
+    background-color: yellow;
+}

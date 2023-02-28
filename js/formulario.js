@@ -34,3 +34,7 @@ function MayorEdad() {
     document.getElementById("formulario").innerHTML = voteable + " para jugar";
 
 }
+
+function enlazar() {
+    window.location.href = "../index.html"; 
+}
