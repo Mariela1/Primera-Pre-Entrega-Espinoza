@@ -5,62 +5,61 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/main.css">
-    <script src="js/generar_carton.js" defer></script>
-    <script src="js/sacar_bolilla.js" defer></script>
-    <title>Bienvenido al Bingo</title>
+    <title>Juego de Bingo</title>
     
-    <h1 style="font-family:verdana">Vamos a jugar Bingo!</h1>
-    
-</head>
-<header>
-</header>
 
 <body>
 
-    <div id="titulo"><h1>Selecciona tu cartilla</h1></div>
-    <div id="bingocartillas"></div>
-    <p id="numero"></p>
-    <div class=".main__contenedor-bolillas"></div>
-    <table>
-        <tr>
-            <td id="celda1"></td>
-            <td id="celda2"></td>
-            <td id="celda3"></td>
-            <td id="celda4"></td>
-            <td id="celda5"></td>
-        </tr>
-        <tr>
-            <td id="celda6"></td>
-            <td id="celda7"></td>
-            <td id="celda8"></td>
-            <td id="celda9"></td>
-            <td id="celda10"></td>
-        </tr>
-        <tr>
-            <td id="celda11"></td>
-            <td id="celda12"></td>
-            <td id="celda13"></td>
-            <td id="celda14"></td>
-            <td id="celda15"></td>
-        </tr>
-        <tr>
-            <td id="celda16"></td>
-            <td id="celda17"></td>
-            <td id="celda18"></td>
-            <td id="celda19"></td>
-            <td id="celda20"></td>
-        </tr>
-        <tr>
-            <td id="celda21"></td>
-            <td id="celda22"></td>
-            <td id="celda23"></td>
-            <td id="celda24"></td>
-            <td id="celda25"></td>
-        </tr>
-    </table>
-    <button onclick="sacarbolillas()">Sacar Bolillas</button>
-    <button onclick="marcarNumeros()">Marcar cartilla</button>
-    <p id="bolillas"></p>
-   <script src="js/sacar_bolilla.js"></script>
+
+   <p> Presione el boton para iniciar el juego</p>
+
+   <button id="iniciarJuego" onclick="iniciarJuego()">Comenzar</button>
+   <button id="detenerJuego" onclick="detenerJuego()" disabled>Detener</button>
+   <button id="continuarJuego" onclick="continuarJuego()" disabled>Continuar</button>
+   <button onclick="reiniciarJuego()">Reiniciar</button>
+   <p id="mensaje"></p>
+   <table id="cartilla"></table>
+   <table id="tablaCartilla"></table>
+   <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+   </tr>
+   <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td id="cel-3-3" class="marcado"></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+   
+    <h2> Bolillas sacadas</h2>
+    <table id="tablaBolillas"></table>
+    <table id="bolillas"></table>
+
+   <script src="js/bingo.js"></script>
 </body>
 </html>
