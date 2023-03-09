@@ -1,41 +1,42 @@
 body {
     background-color: bisque;
 }
-table {
-    border-collapse: collapse;
-    margin-bottom: 1em;
+.contenedor {
+    display: flex;
 }
 
-table.bolillas {
+.jugador1, .jugador2 {
+    margin: 20px;
+}
+.cartilla {
+    border:1px solid black;
+    padding: 10px;
+}
+
+table {
     border-collapse: collapse;
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
-    margin: 0 auto;
+    width: 100%;
 }
 
 td {
-    width: 50px;
-    height: 50px;
     border: 1px solid black;
+    height: 40px;
     text-align: center;
-    font-size: 20px;
-    font-weight: bold;
 }
 
-td.marked {
-    background-color: #ccc;
+#free {
+    background-color: gray;
+    color: white;
 }
 
-td.marcada {
-    background-color: #f2f2f2;
-    color: #999999;
-    text-decoration: line-through;
+#controles {
+    margin-top: 20px;
 }
 
-#cartilla td{
-    width: 50px;
-    height: 50px;
-    text-align: center;
+#mensaje {
+    margin-top: 20px;
     font-size: 24px;
     font-weight: bold;
-    border: 2px solid black;
+    text-align: center;
+    display: none;
 }

@@ -1,268 +1,355 @@
-// Definimos las variables globales
-let intervalId;
-var numerosCartilla = [];
-var numerosSacados = [];
-let cartilla = [];
-let intervaloSacarBolilla = null;
-let tiempoBolilla = 2000;
+// Define las cartillas del bingo de los jugadores
 
-// Generamos una cartilla de bingo aleatoria
+let jugador1Cartilla = [];
+let jugador2Cartilla = [];
 
-function generarCartilla() {
-     // Reiniciamos los arryas de numeros
-     numerosCartilla.length = 0;
-     numerosSacados.length = 0;
-     // Generamos los 24 numeros de la cartilla
+// Crea una nueva partida de bingo
 
-     for (let i=1; i <=25; i++) {
-        if (i !== 13) {
-            numerosCartilla.push(i);
-        }
-     }
+function nuevoJuego() {
+    
+     // Oculta cualquier mensaje de ganador que se este mostrando
+     ocultarMensaje();
 
-     // Barajamos los numeros
+    // Genera una nueva cartilla de bingo para cada jugador
+    jugador1Cartilla = generarCartilla();
+    jugador2Cartilla = generarCartilla();
 
-     for (let i= numerosCartilla.length -1; i >0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [numerosCartilla[i], numerosCartilla[j]] = [numerosCartilla[j], numerosCartilla[i]];
-
-     }
-
-     // Insertamos los numeros en la tabla de la cartilla
-
-     const tablaCartilla = document.getElementById("tablaCartilla");
-     tablaCartilla.innerHTML = "";
-     let contador = 0;
-     for (let i =0; i < 5; i++) {
-        const fila = document.createElement("tr");
-        for (let j=0; j < 5; j++) {
-            const celda = document.createElement("td");
-            celda.setAttribute("data-numero", numerosCartilla)
-            if (i ===2 && j ===2) {
-                celda.textContent = "FREE";
-                celda.classList.add("filled");
-                numerosSacados.push("FREE");
-                celda.classList.add("marcada");
-            } else {
-                celda.textContent = numerosCartilla[contador];
-                contador++;
-            }
-            fila.appendChild(celda);
-        }
-        tablaCartilla.appendChild(fila);
-      
-
-     }
+    // Muestra las cartillas en la pagina
+    mostrarCartilla(jugador1Cartilla, "p1");
+    mostrarCartilla(jugador2Cartilla, "p2");
 }
 
-// Mostramos la cartilla en la pagina HTML
-
-function mostrarCartilla() {
-   const tablaCartilla = document.getElementById("tablaCartilla");
-   const celdas = tablaCartilla.getElementsByTagName("td");
-  
-   let k=0; 
-   for (let i=0; i < cartilla.length; i++) {
-    const fila = cartilla[i];
-    celdas[i].innerHTML = cartilla[i];
-    celdas[i].classList.remove("marcada");
-    for (let j=0; j < fila.length; j++) {
-        const celda = celdas[k++];
-        if (fila[j] === 0) {
-            celda.textContent = "FREE";
-        } else {
-            celda.textContent = fila[j];
-        }
+// Genera una cartilla de bingo
+    function generarCartilla() {
+    const cartilla = [];
+    const numeros = Array.from({ length: 75 }, (_,i) => i + 1);
+   
+    // Agrega 24 numeros aleatorios a la cartilla
+    for (let i = 0; i < 24; i++) {
+        const index = Math.floor(Math.random() * numeros.length);
+        cartilla.push(numeros.splice(index, 1)[0]);
     }
-   }
+    // Coloca el espacio FREE en el centro de la cartilla
+   // cartilla.splice(12,0, "FREE");
 
+    return cartilla;
+
+    }
+// Muestra una cartilla de bingo en la pagina
+function mostrarCartilla(cartilla,jugador) {
+    for (let i = 1 ; i <= 24; i++) {
+        const numero = cartilla[i-1];
+        const id= `${jugador}-${i}`;
+        const celda = document.getElementById(id);
+        celda.textContent = numero;
+    }
 }
 
-
-    // Creamos las filas y columnas de la tabla
-/*
-    for (var i = 0; i < 5; i++) {
-        var fila = document.createElement("tr");
-        for (var j = 0; j < 5; j++) {
-            var celda = document.createElement("td");
-            celda.setAttribute("data-numero", numerosCartilla); // Agregamos el atributo data-numero
-            if (i == 2 && j == 2) {
-                // Celda del centro con la palabra "FREE"
-                celda.innerHTML = "FREE";
-            } else {
-                // celda con un numero de la cartilla
-                celda.innerHTML = numeros.shift();
-
-            }
-            fila.appendChild(celda);
-        }
-        tablaCartilla.appendChild(fila);
-     
-    }
-    */
-
-
-// Marcamos un numero en la cartilla si esta presente
-
-//function marcarCartilla(numero) {
-  //  var celdas = document.getElementsByTagName("td");
-    //for (var i=0; i < celdas.length; i++) {
-      //  if (celdas[i].innerHTML == numero) {
-         //   celdas[i].classList.add("marcado");
-        //}
-    //}
-//}
-
-// Sacamos una bolilla al azar cada 2 segundos
-
-
+// Sacar una bolilla aleatoria
 
 function sacarBolilla() {
+    const numeros = Array.from({ length: 75},(_, i) => i + 1);
+    const index = Math.floor(Math.random() * numeros.length);
+    return numeros.splice(index, 1)[0];
+    
+}
 
-    const tablaBolillas = document.getElementById("tablaBolillas");
-    const numero = Math.floor(Math.random()* (numerosCartilla.length - numerosSacados.length)) +1;
-    numerosSacados.push(numero);
-    const bolilla = document.createElement("button");
-    bolilla.innerText = numero;
-    tablaBolillas.appendChild(bolilla);
+// Marca un numero en la cartilla
 
-    const tablaCartilla = document.getElementById("tablaCartilla");
-    const celdas = tablaCartilla.getElementsByTagName("td");
-    for (let i=0; i < celdas.length; i++) {
-        const numeroCelda = celdas[i].getAttribute("data-numero");
-        if (numeroCelda == numero) {
-            celdas[i].classList.add("marcada");
-        break;
+function marcarCartilla(numero, cartilla) {
+    const index = cartilla.indexOf(numero);
+
+    if (index !== -1) {
+        cartilla[index] = "X";
+    }
+}
+
+// Verifica si un jugador ha completado su cartilla
+function chequearGanador(cartilla) {
+    // Verifica si se han marcado todos los numeros de una fila
+    for (let i = 0; i < 5; i++) {
+        const fila = cartilla.slice(i * 5, i * 5 + 5);
+        if (fila.every(numero => numero === "X")) {
+            return true;
         }
     }
 
-    // Verificamos si se completo la cartilla
-
-    if (numerosCartilla.every(numero => numerosSacados.includes(numero))) {
-        detenerJuego();
-        alert("!Ganaste!");
-    }
-marcarCartilla();
-}
-
-function marcarCartilla(numerosSacados) {
-    const tablaCartilla = document.getElementById("tablaCartilla");
-    const celdas = tablaCartilla.getElementsByTagName("td");
-    let marKed = [];
-    for (let i=0; i < celdas.length; i++) {
-          if (celdas[i].getAttribute("data-numero") == numerosSacados && !celdas[i].classList.contains("marcada")) {
-             celdas[i].classList.add("marcada");
-         break; 
-         }
-      }
-}
-
-function desmarcarCartilla(numerosSacados) {
-    const tablaCartilla = document.getElementById("tablaCartilla");
-    const celdas = tablaCartilla.getElementsByTagName("td");
-    for (let i=0; i < celdas.length; i++) {
-    if (celdas[i].innerHTML == numerosSacados) {
-        celdas[i].classList.remove("marcada");
-        break;
-    }
-}
-}
-
-//let intervalId;
-    /*
-    setInterval(function() {
-        var numeroBolilla;
-        do {
-            numeroBolilla = Math.floor(Math.random()*75) + 1;
-        } while (numerosSacados.includes(numeroBolilla));
-
-        numerosSacados.push(numeroBolilla);
-
-        // Actualizamos la lista de bolillas sacadas en la pagina HTML
-       // var listaBolillas = document.getElementById("bolillas");
-       // var bolilla = document.createElement("li");
-        bolilla.innerHTML = numeroBolilla;
-        listaBolillas.appendChild(bolilla);
-
-        // Marcamos el numero en la cartilla si esta presente
-
-        marcarCartilla(numeroBolilla);
-
-        // Verificamos si se completo la cartilla
-
-        if (numerosCartilla.every(numero => numerosSacados.includes(numero))) {
-            var mensaje = document.getElementById("mensaje");
-            mensaje.innerHTML = "!Ganaste!";
-
+    // Verifica si se han marcado todos los numeros de una columna
+    for (let i = 0; i < 5; i++) {
+        const columna = [cartilla[i], cartilla[i + 5], cartilla[i + 10], cartilla[i + 15], cartilla[i + 20]];
+        if (columna.every(numero => numero === "X")) {
+            return true;
         }
+    }
 
-    },3000); */
+    // Verifica si se han marcado todos los numeros en diagonal
+    if (cartilla[0] === "X" && cartilla[6] === "X" && cartilla[12] === "X" && cartilla[18] === "X" && cartilla[24] === "X") {
+        return true;
+    }
 
-
-
-// Iniciemos el juego
-
-function iniciarJuego() {
-
-    // Generamos la cartilla
-
-    generarCartilla();
-   
-
-    // Mostramos la cartilla en HTML
-
-    mostrarCartilla();
-
-    document.getElementById('iniciarJuego').disabled = true;
-    document.getElementById('detenerJuego').disabled = false;
-    document.getElementById('continuarJuego').disabled = false;
-    intervalId = setInterval(sacarBolilla, 2000); // Llama a la funcion sacarBolilla cada 2 segundos
+    if (cartilla[4] === "X" && cartilla[8] === "X" && cartilla[12] === "X" && cartilla[16] === "X" && cartilla[20] === "X") {
+        return true;
+    }
+    // Si no se ha completado la cartilla, devuelve false
+    return false;
 
 }
 
-function detenerJuego() {
-    clearInterval(intervalId);
-    document.getElementById('iniciarJuego').disabled = false;
-    document.getElementById('detenerJuego').disabled = true;
-    document.getElementById('contiuarJuego').disabled = false;
+// Muestra un mensaje de ganador en la pagina
+
+function muestraMensaje(jugador) {
+    const mensaje = document.getElementById("mensaje");
+    mensaje.textContent = `!Bingo! El jugador ${jugador} ha ganado!`;
+    mensaje.style.display = "block";
 }
 
-function continuarJuego() {
-    intervalId = setInterval(sacarBolilla, 2000);
-    document.getElementById('iniciarJuego').disabled = true;
-    document.getElementById('detenerJuego').disabled = false;
-    document.getElementById('continuarJuego').disabled = true;
+// Oculta el mensaje de ganador en la pagina
+
+function ocultarMensaje() {
+    const mensaje = document.getElementById("mensaje");
+    mensaje.style.display = "none";
 }
 
-// Limpiamos la pagina para reiniciar el juego
+// Inicia el juego al cargar la pagina
 
-listaBolillas.innerHTML = ""
+document.addEventListener("DOMContentLoaded",function() {
+nuevoJuego();
 
-function reiniciarJuego() {
-    const tablaBolillas = document.getElementById("tablaBolillas");
-    const tablaCartilla = document.getElementById("tablaCartilla");
-    const celdas = tablaCartilla.getElementsByTagName("td");
-    numerosCartilla = generarCartilla();
-    numerosSacados = [];
+const nuevoJuegoButton = document.getElementById("nuevo-juego");
+nuevoJuegoButton.addEventListener("click", function() {
+nuevoJuego();
+
+});
+
+// Inicializa el juego al cargar la pagina
+
+window.addEventListener("load", nuevoJuego);
  
 
-    // Vaciamos las bolillas y desmarcamos la cartilla
+// Maneja el evento de sacar una bola
 
-    while (tablaBolillas.firstChild) {
-        tablaBolillas.removeChild(tablaBolillas.firstChild);
+const siguienteBolillaButton = document.getElementById("siguiente-bolilla");
+siguienteBolillaButton.addEventListener("click", function() {
+const bolilla = sacarBolilla();
+
+// Muestra la bola en la pagina
+
+const bolillaDisplay = document.getElementById("bolilla-display");
+bolillaDisplay.textContent = bolilla;
+
+    marcarCartilla(bolilla, jugador1Cartilla);
+    marcarCartilla(bolilla, jugador2Cartilla);
+
+    // Muestra las cartillas actualizadas en la pagina
+
+    mostrarCartilla(jugador1Cartilla, "p1");
+    mostrarCartilla(jugador2Cartilla, "p2");
+
+    // Verifica si alguno de los jugadores ha ganado
+
+    if (chequearGanador(jugador1Cartilla)) {
+        muestraMensaje(1);
+    }
+
+    if (chequearGanador(jugador2Cartilla)) {
+        muestraMensaje(2);
+    }
+
+    
+});
+
+
+});
+
+
+
+let juegoInProgreso = false;
+let intervalId = null;
+
+// Inicia el juego
+
+function nuevoJuego() {
+    if (juegoInProgreso) {
+        return;
+    }
+
+// Habilita el boton de sacar bolilla
+const sacarBolillaButton = document.getElementById("sacarBolilla-button");
+sacarBolillaButton.disabled = false;
+
+// Inicia un intervalo para sacar una bolilla cada 3 segundos
+
+intervalId = setInterval(() => {
+    sacarBolillaButton.click();
+}, 2000);
+
+juegoInProgreso = true;
+
+}
+
+// Continua el juego
+
+function continuarJuego() {
+    if (juegoInProgreso) {
+        return;
+    }
+
+    // Habilita el boton de sacar bolilla
+
+    const sacarBolillaButton = document.getElementById("sacarBolilla-button");
+    sacarBolillaButton.disabled = false;
+
+    // Continua el intervalo para sacar una bolilla cada 2 segundos
+
+    intervalId = setInterval(() => {
+        sacarBolillaButton.click();
+    }, 2000);
+    juegoInProgreso = true;
+}
+
+// Detiene el juego
+
+function detenerJuego() {
+    if (!juegoInProgreso) {
+        return;
+    }
+
+
+// Deshabilita el boton de sacar bolilla
+
+const sacarBolillaButton = document.getElementById("sacarBolilla-button");
+sacarBolillaButton.disabled = true;
+
+// Detiene el intervalo para sacar bolillas
+
+clearInterval(intervalId);
+intervalId = null;
+
+juegoInProgreso = false;
+
+}
+
+// Reinicia el juego
+
+function reiniciarJuego() {
+    // Ocupa el mensaje del jugador
+
+    ocultarMensaje();
+
+    // Reiniciar las cartillas de los jugadores
+
+    jugador1Cartilla = generarCartilla();
+    jugador2Cartilla = generarCartilla();
+    
+    // Muestra las cartillas actualizadas en la pagina
+
+    mostrarCartilla(jugador1Cartilla, "p1");
+    mostrarCartilla(jugador2Cartilla, "p2");
+
+    // Detiene el juego si esta en progreso
+
+    detenerJuego();
+
+}
+
+// Maneja los eventos de los botones
+
+const iniciarButton = document.getElementById("iniciar-button");
+iniciarButton.addEventListener("click", nuevoJuego);
+
+const continuarButton = document.getElementById("continuar-button");
+continuarButton.addEventListener("click", continuarJuego);
+
+const detenerButton = document.getElementById("detener-button");
+detenerButton.addEventListener("click", detenerJuego);
+
+const reiniciarButton = document.getElementById("reiniciar-button");
+reiniciarButton.addEventListener("click", reiniciarJuego);
+
+///////////////////////////////////////////////////
+// Funcion para iniciar el juego
+
+/*
+function iniciarJuego() {
+    
+    nuevoJuego();
+    // Marca el numero en las cartillas de los jugadores
+
+    marcarCartilla(bolilla, jugador1Cartilla);
+    marcarCartilla(bolilla, jugador2Cartilla);
+
+    // Muestra las cartillas actualizadas en la pagina
+
+    mostrarCartilla(jugador1Cartilla, "p1");
+    mostrarCartilla(jugador2Cartilla, "p2");
+
+    // Verifica si alguno de los jugadores ha ganado
+
+    if (chequearGanador(jugador1Cartilla)) {
+        muestraMensaje("1");
+    }
+
+    if (chequearGanador(jugador2Cartilla)) {
+        muestraMensaje("2");
     }
     
-    for (let i=0; i < celdas.length; i++) {
-        celdas[i].classList.remove("marcada");
+    document.getElementById("mensaje").textContent = "";
+    document.getElementsByTagName("button")[0].setAttribute("disabled", "true");
+    document.getElementsByTagName("button")[1].removeAttribute("disabled");
+    document.getElementsByTagName("button")[2].setAttribute("disabled", "true");
+    //intervalo = setInterval(sacarBolilla, 1000);
+    sacarBolilla();
+    
+}
+
+// Funcion para detener el juego
+
+const controles = document.getElementById('controles');
+function detenerJuego() {
+    clearInterval(intervalo);
+    document.getElementsByTagName("button")[0].removeAttribute("disabled");
+    document.getElementsByTagName("button")[1].setAttribute("disabled", "true");
+    document.getElementsByTagName("button")[2].removeAttribute("disabled");
+}
+
+// Funcion para reiniciar el juego
+
+function reiniciarJuego() {
+    //cartilla = [];
+    detenerJuego();
+    nuevoJuego();
+
+    // Marca el numero en las cartillas de los jugadores
+
+    marcarCartilla(bolilla, jugador1Cartilla);
+    marcarCartilla(bolilla, jugador2Cartilla);
+
+    // Muestra las cartillas actualizadas en la pagina
+
+    mostrarCartilla(jugador1Cartilla, "p1");
+    mostrarCartilla(jugador2Cartilla, "p2");
+
+    // Verifica si alguno de los jugadores ha ganado
+
+    if (chequearGanador(jugador1Cartilla)) {
+        muestraMensaje("1");
     }
 
-    // Mostramos la nueva cartilla
-
-    mostrarCartilla(numerosCartilla);
-
-    // Habilitamos el boton de inicio y deshabilitamos los otros
-
-    document.getElementById('iniciarJuego').disabled = false;
-    document.getElementById('detenerJuego').disabled = true;
-    document.getElementById('continuarJuego').disabled = true;
+    if (chequearGanador(jugador2Cartilla)) {
+        muestraMensaje("2");
+    }
+    //turno = jugadores;
+    document.getElementById("mensaje").textContent = "";
 }
+
+// Funcion para continuar el juego despues de detenerlo
+
+function continuarJuego() {
+    document.getElementsByTagName("button")[0].setAttribute("disabled","true");
+    document.getElementsByTagName("button")[1].removeAttribute("disabled");
+    document.getElementsByTagName("button")[2].setAttribute("disabled","true");
+    //intervalo = setInterval(sacarBolilla, 1000);
+    sacarBolilla();
+}
+
+*/
